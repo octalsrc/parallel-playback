@@ -1,0 +1,27 @@
+body {
+    color: #FFFFFF;
+    background-color: #404040;
+}
+
+a:link {
+    color: yellow;
+}
+a:visited {
+    color: yellow;
+}
+
+#status {
+    border-style: solid;
+    border-color: #aacccc;
+    padding: 0.5em;
+    margin-top: 0.5em;
+}
+
+hr.content-bottom {
+    margin-top: 2em;
+}
+
+footer.license {
+    font-size: 90%;
+    margin: 1em;
+}
