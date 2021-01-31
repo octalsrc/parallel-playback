@@ -6,6 +6,7 @@ mod timing;
 
 use std::env;
 use std::path::Path;
+use std::str::FromStr;
 
 use warp::Filter;
 
@@ -44,5 +45,8 @@ async fn main() {
 
     let routes = common.or(join).or(host).or(msg);
 
-    warp::serve(routes).run(([127, 0, 0, 1], port)).await;
+    // Listen on all ipv4 and ipv6 interfaces
+    let addr = std::net::IpAddr::from_str("::0").unwrap();
+
+    warp::serve(routes).run((addr, port)).await;
 }

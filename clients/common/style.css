@@ -25,3 +25,7 @@ footer.license {
     font-size: 90%;
     margin: 1em;
 }
+
+video {
+    max-height: 800px;
+}

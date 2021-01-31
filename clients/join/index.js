@@ -11,7 +11,6 @@ mkstatus = function (msg) {
 vid.onplay = function() {
     if (init == 0) {
         init = 1;
-        vid.pause();
         socket.send('ready');
         mkstatus("Ready!");
         // document.getElementById("status").childNodes[0].innerHTML = "Ready!";
