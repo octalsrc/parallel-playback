@@ -8,15 +8,15 @@ pub enum IntroMsg {
 
 #[derive(Serialize, Deserialize, Debug)]
 pub enum HostMsg {
-    /// Play(url, seek_pos ("min:sec"), start_offset (seconds))
-    Play(String, String, usize),
+    /// Play(url, vtt, seek_pos ("min:sec"), start_offset (seconds))
+    Play(String, Option<String>, String, usize),
     Pause,
 }
 
 #[derive(Serialize, Deserialize, Debug)]
 pub enum JoinerMsg {
-    /// Play(url, seek_pos (seconds), start_time (milliseconds unix))
-    Play(String, usize, u128),
+    /// Play(url, vtt, seek_pos (seconds), start_time (milliseconds unix))
+    Play(String, Option<String>, usize, u128),
     Pause,
 }
 
@@ -39,8 +39,12 @@ mod tests {
     #[test]
     fn hostmsg_rep() {
         assert_eq!(
-            serde_json::to_string(&HostMsg::Play("http://asdf".to_string(), "1:24:30".to_string(), 5)).unwrap(),
-            "{\"Play\":[\"http://asdf\",\"1:24:30\",5]}"
+            serde_json::to_string(&HostMsg::Play("http://asdf".to_string(), Some("http://vtt".to_string()), "1:24:30".to_string(), 5)).unwrap(),
+            "{\"Play\":[\"http://asdf\",\"http://vtt\",\"1:24:30\",5]}"
+        );
+        assert_eq!(
+            serde_json::to_string(&HostMsg::Play("http://asdf".to_string(), None, "1:24:30".to_string(), 5)).unwrap(),
+            "{\"Play\":[\"http://asdf\",null,\"1:24:30\",5]}"
         );
         assert_eq!(
             serde_json::to_string(&HostMsg::Pause).unwrap(),
@@ -50,8 +54,12 @@ mod tests {
     #[test]
     fn joinmsg_rep() {
         assert_eq!(
-            serde_json::to_string(&JoinerMsg::Play("http://asdf".to_string(), 120, 5000)).unwrap(),
-            "{\"Play\":[\"http://asdf\",120,5000]}"
+            serde_json::to_string(&JoinerMsg::Play("http://asdf".to_string(), Some("http://vtt".to_string()), 120, 5000)).unwrap(),
+            "{\"Play\":[\"http://asdf\",\"http://vtt\",120,5000]}"
+        );
+        assert_eq!(
+            serde_json::to_string(&JoinerMsg::Play("http://asdf".to_string(), None, 120, 5000)).unwrap(),
+            "{\"Play\":[\"http://asdf\",null,120,5000]}"
         );
         assert_eq!(
             serde_json::to_string(&JoinerMsg::Pause).unwrap(),

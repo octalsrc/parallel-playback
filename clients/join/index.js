@@ -31,12 +31,32 @@ socket.addEventListener('message', function (event) {
         mkstatus("Stream is paused.");
     } else if ("Play" in cmd) {
         var cmd_src = cmd.Play[0];
-        var cmd_seek = cmd.Play[1];
-        var cmd_time = cmd.Play[2];
+        var cmd_vtt = cmd.Play[1];
+        var cmd_seek = cmd.Play[2];
+        var cmd_time = cmd.Play[3];
 
         vid.pause();
         if (vid.src != cmd_src) {
-            vid.src = cmd_src
+            vid.src = cmd_src;
+        }
+        if (null != cmd_vtt) {
+            if (vid.childElementCount == 1) {
+                var track = vid.children[0];
+                if (track.src != cmd_vtt) {
+                    track.src = cmd_vtt;
+                }
+            } else {
+                var track = document.createElement("track");
+                track.kind = "captions";
+                track.label = "On";
+                track.src = cmd_vtt;
+                vid.append(track);
+            }
+        } else {
+            if (vid.childElementCount == 1) {
+                var track = vid.children[0];
+                track.remove();
+            }
         }
         vid.currentTime = cmd_seek;
 

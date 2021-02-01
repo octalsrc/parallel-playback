@@ -17,6 +17,13 @@
              style="width: 75%"/>
     </div>
     <div>
+      <p>URL of WebVTT text track for captions (optional):</p>
+
+      <input id="vtt-url" type="url"
+             value="https://example.com/foo.vtt"
+             style="width: 75%"/>
+    </div>
+    <div>
       <p>Media time point (hh:mm:ss) to start from:</p>
 
       <input id="seek-str" value="00:00:00"/>
@@ -26,7 +33,7 @@
 
       <input id="offset-secs" type="number" value="8"/>
     </div>
-    <div>
+    <div class="button-panel">
       <input id="play-button" type="button" value="Play"/>
       <input id="pause-button" type="button" value="Pause"/>
     </div>

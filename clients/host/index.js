@@ -9,8 +9,13 @@ socket.addEventListener('open', function (event) {
 });
 
 document.getElementById("play-button").addEventListener('click', function () {
+    var vtt = document.getElementById("vtt-url").value;
+    if (vtt == "") {
+        vtt = null;
+    }
     var playReq = { Play: [
         document.getElementById("stream-url").value,
+        vtt,
         document.getElementById("seek-str").value,
         Number(document.getElementById("offset-secs").value)
     ]};

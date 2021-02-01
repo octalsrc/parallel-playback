@@ -137,12 +137,13 @@ pub async fn handle_connection(
             let r = state.read().await.role(conn_id);
             match r {
                 Some(Role::Host(p)) => match serde_json::from_str(&msg) {
-                    Ok(HostMsg::Play(url,seekstr,offset_secs)) =>
+                    Ok(HostMsg::Play(url,opt_vtt,seekstr,offset_secs)) =>
                        match timing::from_seekstr(&seekstr) {
                            Ok(seek_secs) => {
                                let m = serde_json::to_string(
                                    &JoinerMsg::Play(
                                        url,
+                                       opt_vtt,
                                        seek_secs,
                                        timing::get_playtime(offset_secs)
                                    )
